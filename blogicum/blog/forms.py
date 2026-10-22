@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-
-from blog.models import Post, Comment
+from .models import Post, Comment
 
 User = get_user_model()
 
@@ -16,12 +15,11 @@ class CommentForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        # Вместо exclude=('author',) явно перечисляем нужные поля.
-        # author не включаем — он будет установлен в представлении (view).
         fields = (
             'title',
             'text',
             'pub_date',
+            'image',
             'category',
             'location',
         )
@@ -33,7 +31,6 @@ class PostForm(forms.ModelForm):
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        # Явно указываем поля, чтобы не зависеть от изменений модели.
         fields = ('username', 'bio')
 
 
