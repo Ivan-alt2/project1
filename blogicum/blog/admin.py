@@ -1,15 +1,10 @@
 from django.contrib import admin
-from blog.models import Post, Category, Location
+from .models import Post, Category, Location
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    search_fields = (
-        'title',
-        'text',
-    )
-    # pub_date — это DateTimeField, по нему search_fields обычно не делают:
-    # поиск по дате делается через list_filter или date_hierarchy.
+    search_fields = ('title', 'text')
     list_display = ('title', 'author', 'pub_date', 'is_published')
     list_filter = ('is_published', 'category', 'location')
     date_hierarchy = 'pub_date'
@@ -17,10 +12,7 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    search_fields = (
-        'title',
-        'description',
-    )
+    search_fields = ('title', 'description')
     list_display = ('title', 'slug', 'is_published')
 
 
